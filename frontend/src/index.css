@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.phone-input-container {
+    width: 100%;
+  }
+  
