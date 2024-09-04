@@ -11,7 +11,6 @@ import { Label } from "../components/ui/label"
 import { Card, CardContent , CardFooter, CardHeader, CardTitle } from "../components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "../components/ui/alert"
 import { AlertCircle } from 'lucide-react'
-import AnimatedBg from '@/components/AnimatedBg'
 import { useToast } from '@/hooks/use-toast'
 
 type LoginFormValues = Yup.InferType<typeof loginSchema>;
@@ -53,7 +52,6 @@ export default function LoginForm() {
 
   return (
     <div className='h-screen w-full overflow-hidden'>
-      <AnimatedBg/>
       <div className="relative z-10 flex h-full items-center justify-center p-4">
         <Card className="w-full max-w-md bg-white">
           <CardHeader className='text-center text-xl font-bold'>
