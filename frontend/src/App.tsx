@@ -6,13 +6,10 @@ import StepperComponent from './pages/StepperForm'
 import { useEffect } from 'react'
 
 function App() {
-  const token  = window.localStorage.getItem("auth-token")
   const navigate  = useNavigate();
   
   useEffect(() => {
-    if (!token) {
       navigate("/login")
-    }
   })
 
   return (
