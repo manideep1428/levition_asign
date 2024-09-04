@@ -34,17 +34,19 @@ model Address {
 }
 
 model File {
-  id            Int @id @default(autoincrement())
-  url           String
-  fileType      String
-  date          String
-  userId        String
-  user          User @relation( fields: [userId],references: [id])
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  publicId  String?
+  size      Int
+  mimeType  String
+  date      String
+  userId    String
+  user      User  @relation(fields: [userId] , references: [id])
 }
 
-
 model Interests{
-  id                Int     @id @default(autoincrement())
+  id                String     @id @default(cuid())
   userId            String
   value             String
   user              User     @relation(fields: [userId], references: [id])

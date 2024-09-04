@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button";
 import AddressForm from "@/components/AddressForm";
 import FileUploader from "../components/FileUploader";
 import { FancyMultiSelect } from "../components/MultiSelcter";
+import { useNavigate } from "react-router-dom";
 
 const steps = ["Step 1", "Step 2", "Step 3"];
 
 export default function StepperComponent() {
   const [currentStep, setCurrentStep] = useState(0);
   const [onUploadSuccess, setUploadSuccess] = useState<boolean>(true);
+  const navigate  = useNavigate();
 
   const nextStep = () => {
     if (!onUploadSuccess) {
@@ -17,6 +19,7 @@ export default function StepperComponent() {
       return;
     } else {
       setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+      if(currentStep === 2) return navigate("/submissions");
     }
   };
 
@@ -71,8 +74,8 @@ export default function StepperComponent() {
         <Button onClick={prevStep} disabled={currentStep === 0}>
           Previous
         </Button>
-        <Button onClick={nextStep} disabled={currentStep === steps.length - 1}>
-          Next
+        <Button onClick={nextStep} >
+        {currentStep === steps.length - 1 ? "Submit" : "Next"}
         </Button>
       </div>
     </div>

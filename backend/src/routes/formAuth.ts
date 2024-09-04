@@ -1,8 +1,8 @@
-//
 import Router from "express";
 import multer from "multer";
 import { v2 as cloudinary } from 'cloudinary';
 import { PrismaClient } from "@prisma/client";
+import upload from "../config/multer";
 
 const prisma = new  PrismaClient();
 const router = Router();
@@ -11,14 +11,6 @@ var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); 
 var yyyy = today.getFullYear();
 const todayDate = mm + '/' + dd + '/' + yyyy;
-const upload = multer({ storage: multer.memoryStorage() });
-
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-  });
-  
 
 
 type FormAuth = {
@@ -91,8 +83,12 @@ type DataPops = {
 
 
 router.post("/form-dropdown",async  (req, res) => {
+  try {
+    
     const data = req.body
-    const save  = data.map((data : DataPops)=>{
+    const userId = req.headers.authorization
+    if(!userId) return res.status(401).json({ error: 'No User provided' });
+    const save  = data.map( async (data : DataPops)=>{
       await prisma.interests.upsert({
         where:{
             id : data.label
@@ -103,13 +99,20 @@ router.post("/form-dropdown",async  (req, res) => {
         create:{
           value:data.value,
           date:todayDate, 
-          userId: "2"
+          userId: userId
         }
       })
-    }
+    })  
+    if(!save) throw new Error("Error Occured in Database");
+    res.status(200).json({message : "Address Added Successfully"})
+  } catch (error) {
+    res.send(error)
+  }
+   
 });
 
 router.get("/form-bundle" , async (req,res)=>{
+ try {
   const userId = req.headers.authorization
   const data = await prisma.user.findMany({
     where:{
@@ -121,45 +124,9 @@ router.get("/form-bundle" , async (req,res)=>{
     }
   })
   res.send(data)
+ } catch (error) {
+  return res.send(error)
+ }
 })
-
-
-router.post('/upload', upload.array('files', 5), async (req, res) => {
-  try {
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ error: 'No files uploaded' });
-    }
-
-    const files = req.files as Express.Multer.File[];
-
-    const uploadPromises: Promise<any>[] = files.map(file => {
-      return new Promise((resolve, reject) => {
-        const uploadStream = cloudinary.uploader.upload_stream(
-          { resource_type: 'auto' },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          }
-        );
-        uploadStream.end(file.buffer);
-      });
-    });
-
-    const uploadedFiles = await Promise.all(uploadPromises);
-
-    console.log(uploadedFiles)
-
-    // const response = {
-    //   message: 'Files uploaded successfully',
-    //   files: savedFiles
-    // };
-
-    res.json("response");
-  } catch (error) {
-    console.error('Error uploading files:', error);
-    res.status(500).json({ error: 'Error uploading files' });
-  }
-});
-
 
 export { router as formRouter }

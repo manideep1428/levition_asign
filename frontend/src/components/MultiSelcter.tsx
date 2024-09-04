@@ -55,7 +55,11 @@ export function FancyMultiSelect({onUploadSuccess}:UploaderProps) {
   const handleSubmit = async () =>{
    try {
     console.log("selected : " , selected)
-    const res = await axios.post(`${BACKEND_URL}/api/v1/form-dropdown` , selected )
+    const res = await axios.post(`${BACKEND_URL}/api/v1/form-dropdown`, selected,
+      { headers : {
+        "Authorization":  localStorage.getItem("auth-token")
+      }}
+     )
     toast({
       title: "Success",
       description: "Form Submitted Successfully",

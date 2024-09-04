@@ -3,8 +3,8 @@ import { userRouter } from './routes/UserAuth';
 import bodyParser from 'body-parser';
 import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import { formRouter } from './routes/formAuth';
+import { fileUploader } from './routes/fileUploader';
 
 require('dotenv').config();
 
@@ -17,12 +17,9 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/",(req ,res)=>{
-    res.send("Hello World");
-})
-
 app.use("/api/v1", userRouter);
 app.use("/api/v1", formRouter);
+app.use("/v1", fileUploader)
 
 
 app.listen(8080, ()=>{
