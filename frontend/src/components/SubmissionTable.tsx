@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Search, Calendar } from 'lucide-react';
+import { Search, Calendar, FileIcon } from 'lucide-react';
 import axios from 'axios';
 import { BACKEND_URL } from '../../config';
 
@@ -30,6 +30,17 @@ interface Interest {
   date: string;
 }
 
+interface File {
+  id: string;
+  name: string;
+  url: string;
+  publicId?: string;
+  size: number;
+  mimeType: string;
+  date: string;
+  userId: string;
+}
+
 interface User {
   id: string;
   name: string;
@@ -37,7 +48,7 @@ interface User {
   password: string;
   addresses: Address[];
   interests: Interest[];
-  files: string[];
+  files: File[];
 }
 
 export default function TableComponent() {
@@ -116,7 +127,9 @@ export default function TableComponent() {
               selected={startDate}
               onChange={(date: Date | null) => setStartDate(date)}
               selectsStart
+              //@ts-expect-error fkkf
               startDate={startDate}
+              //@ts-expect-error fkkf
               endDate={endDate}
               placeholderText="Start Date"
               className="w-32 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
@@ -125,8 +138,11 @@ export default function TableComponent() {
               selected={endDate}
               onChange={(date: Date | null) => setEndDate(date)}
               selectsEnd
+              //@ts-expect-error fkkf
               startDate={startDate}
+              //@ts-expect-error fkkf
               endDate={endDate}
+              //@ts-expect-error fkkf
               minDate={startDate}
               placeholderText="End Date"
               className="w-32 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
@@ -141,6 +157,7 @@ export default function TableComponent() {
                 <TableHead>Email</TableHead>
                 <TableHead>Addresses</TableHead>
                 <TableHead>Interests</TableHead>
+                <TableHead>Files</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -158,6 +175,17 @@ export default function TableComponent() {
                   </TableCell>
                   <TableCell>
                     {user.interests.map(interest => interest.value).join(', ')}
+                  </TableCell>
+                  <TableCell>
+                    {user.files.map((file, index) => (
+                      <div key={file.id} className="flex items-center space-x-2">
+                        <FileIcon className="h-4 w-4" />
+                        <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                          {file.name}
+                        </a>
+                        {index < user.files.length - 1 && <br />}
+                      </div>
+                    ))}
                   </TableCell>
                 </TableRow>
               ))}
