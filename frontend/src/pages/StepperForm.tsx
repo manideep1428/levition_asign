@@ -10,7 +10,7 @@ const steps = ["Step 1", "Step 2", "Step 3"];
 
 export default function StepperComponent() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [onUploadSuccess, setUploadSuccess] = useState<boolean>(true);
+  const [onUploadSuccess, setUploadSuccess] = useState<boolean>(false);
   const navigate  = useNavigate();
 
   const nextStep = () => {

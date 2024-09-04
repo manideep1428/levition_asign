@@ -16,6 +16,7 @@ import { addressSchema } from '@/lib/validation';
 import { UploaderProps } from '@/components/FileUploader';
 import axios from 'axios';
 import { BACKEND_URL } from '../../config';
+import { useToast } from '@/hooks/use-toast';
 
 type AddressFormValues = z.infer<typeof addressSchema>;
 
@@ -23,6 +24,7 @@ export default function AddressForm({onUploadSuccess}:UploaderProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const dispatch = useDispatch();
+  const {toast} = useToast();
 
   const {
     register,
@@ -45,7 +47,10 @@ export default function AddressForm({onUploadSuccess}:UploaderProps) {
           'Authorization': localStorage.getItem('auth-token'),
         }
       });
-      if (res.status === 200) {
+      if (res.data.message) {
+        toast({
+          title :"Form Submmitted"
+        })
         onUploadSuccess(true);
       }
     } catch (error) {

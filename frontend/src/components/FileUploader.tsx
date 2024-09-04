@@ -77,10 +77,11 @@ export default function FileUploader({ onUploadSuccess }: UploaderProps) {
           },
         })
 
-        if (res.status === 200) {
+        if (res.data.message) {
           toast({
             title: `${file.name} uploaded successfully`,
           })
+          onUploadSuccess(true);
         }
       } catch (error) {
         console.error(`Failed to upload ${file.name}:`, error)
