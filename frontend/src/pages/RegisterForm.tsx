@@ -11,6 +11,7 @@ import { AlertCircle } from 'lucide-react'
 import * as Yup from 'yup'
 import {  useNavigate } from 'react-router-dom'
 import { registerSchema } from '@/lib/validation'
+import AnimatedBg from '@/components/AnimatedBg'
 import { BACKEND_URL } from '../../config'
 import axios from 'axios'
 import { toast } from '@/hooks/use-toast'
@@ -56,6 +57,7 @@ export default function RegisterPage() {
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
+    <AnimatedBg/>
      <div className="relative z-10 flex h-full items-center justify-center p-4">
         <Card className="bg-white w-full max-w-md">
         <CardHeader>
