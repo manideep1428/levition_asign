@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd db  && npx prisma generate  && cd .. && tsc -b  && pm2 start dist/index.js --name mybackend"
+    "build": "cd db  && npx prisma generate  && cd .. && tsc -b",
+    "start": "pm2 start dist/index.js --name mybackend"
   },
   "keywords": [],
   "author": "",
