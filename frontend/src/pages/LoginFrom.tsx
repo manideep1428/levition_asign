@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from "react-router-dom"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { loginSchema } from '@/lib/validation'
@@ -88,7 +87,7 @@ export default function LoginForm() {
           </form>
           <div className='flex justify-center items-center p-4 font-semibold'>
             No Account ? Create One 
-            <Link to={"/register"} className="text-blue-500 hover:underline ml-2 hover:text-blue-800"> Register </Link> 
+            <a href={"/register"} className="text-blue-500 hover:underline ml-2 hover:text-blue-800"> Register </a> 
           </div>
         </Card>
       </div>

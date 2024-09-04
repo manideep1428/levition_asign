@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from 'lucide-react'
 import * as Yup from 'yup'
-import { Link } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import { registerSchema } from '@/lib/validation'
 import AnimatedBg from '@/components/AnimatedBg'
 import { BACKEND_URL } from '../../config'
@@ -21,6 +21,7 @@ type RegisterFormValues = Yup.InferType<typeof registerSchema>
 export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const navigate = useNavigate();
 
   const {
     register,
@@ -43,7 +44,7 @@ export default function RegisterPage() {
         toast({
           title: 'Registration successful',
         })
-        window.location.href = '/login'
+       navigate('/login')
       }
     }
      catch (error) {
@@ -101,7 +102,7 @@ export default function RegisterPage() {
         </form>
         <div className='flex justify-center items-center p-4 font-semibold'>
             Already Have an Account ?
-            <Link to={"/login"} className="text-blue-500 hover:underline ml-2 hover:text-blue-800"> Login </Link> 
+            <a href={"/"} className="text-blue-500 hover:underline ml-2 hover:text-blue-800"> Login </a> 
         </div>
         </Card>
     </div>
