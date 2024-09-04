@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":  "cd db  && npx prisma generate  && cd .. && tsc -b  && pm2 start dist/index.js --name mybackend"
+    "start": "cd db  && npx prisma generate  && cd .. && tsc -b  && pm2 start dist/index.js --name mybackend"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
     "prisma": "^5.19.0",
+    "typescript": "^5.5.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {
