@@ -1,18 +1,19 @@
+'use client'
 import { useState } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AddressForm from "@/components/AddressForm";
 import FileUploader from "../components/FileUploader";
 import { FancyMultiSelect } from "../components/MultiSelcter";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 
-const steps = ["Step 1", "Step 2", "Step 3"];
+
 
 export default function StepperComponent() {
   const [currentStep, setCurrentStep] = useState(0);
+  const steps = ["Step 1", "Step 2", "Step 3"];
   const [onUploadSuccess, setUploadSuccess] = useState<boolean>(false);
   const navigate  = useNavigate();
-
   const nextStep = () => {
     if (!onUploadSuccess) {
       alert("Please upload, Before leaving");

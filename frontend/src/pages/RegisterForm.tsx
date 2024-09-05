@@ -8,12 +8,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from 'lucide-react'
 import * as Yup from 'yup'
-import {  useNavigate } from 'react-router-dom'
 import { registerSchema } from '@/lib/validation'
 import AnimatedBg from '@/components/AnimatedBg'
 import { BACKEND_URL } from '../../config'
 import axios from 'axios'
 import { toast } from '@/hooks/use-toast'
+import { useNavigate } from 'react-router-dom'
 
 type RegisterFormValues = Yup.InferType<typeof registerSchema>
 
